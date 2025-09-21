@@ -10,7 +10,6 @@ let camera: THREE.PerspectiveCamera
 let cube: THREE.Mesh
 let door: THREE.Mesh
 let capsule: THREE.Mesh
-let animationId: number
 let controls: OrbitControls
 
 const scaleX = ref(1)
@@ -107,7 +106,6 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-  cancelAnimationFrame(animationId)
   window.removeEventListener('resize', onWindowResize)
   renderer.dispose()
 })
