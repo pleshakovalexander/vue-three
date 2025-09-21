@@ -59,7 +59,7 @@ onMounted(() => {
   // Create door mesh
   const doorGeometry = new THREE.BoxGeometry(2, 4, 0.1)
   const doorMaterial = new THREE.MeshStandardMaterial({
-    map: loader.load('/textures/wood_diffuse.png'),
+    map: loader.load(import.meta.env.BASE_URL + '/textures/wood_diffuse.png'),
   })
   door = new THREE.Mesh(doorGeometry, doorMaterial)
   door.position.set(0, 0, -5)
