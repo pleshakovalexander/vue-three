@@ -33,13 +33,14 @@ onMounted(() => {
   const geometry = new THREE.BoxGeometry(1, 1, 1)
   const material = new THREE.MeshStandardMaterial({ color: 0xe8b11a })
   cube = new THREE.Mesh(geometry, material)
+  cube.position.set(-3, 2, -5)
   scene.add(cube)
 
   // Capsule
   const geometry1 = new THREE.CapsuleGeometry(1, 1, 4, 8)
   const material1 = new THREE.MeshStandardMaterial({ color: 0x1ae873 })
   capsule = new THREE.Mesh(geometry1, material1)
-  capsule.position.set(5, 2, -3)
+  capsule.position.set(3, 3, -7)
   scene.add(capsule)
 
   // Lights
@@ -49,8 +50,6 @@ onMounted(() => {
   const directionalLight = new THREE.DirectionalLight(0xffffff, 1)
   directionalLight.position.set(5, 10, 7.5)
   scene.add(directionalLight)
-
-  camera.position.z = 5
 
   // Handle resize
   window.addEventListener('resize', onWindowResize)
