@@ -25,6 +25,9 @@ onMounted(() => {
   renderer = new THREE.WebGLRenderer({ antialias: true })
 
   renderer.setSize(window.innerWidth, window.innerHeight)
+  renderer.shadowMap.enabled = true
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap
+
   renderer.setAnimationLoop(() => {
     cube.rotation.x += 0.01
     cube.rotation.y += 0.01
@@ -42,7 +45,7 @@ onMounted(() => {
   const geometry = new THREE.BoxGeometry(1, 1, 1)
   const material = new THREE.MeshStandardMaterial({ color: 0xe8b11a })
   cube = new THREE.Mesh(geometry, material)
-  cube.position.set(-4, 2, -5)
+  cube.position.set(-4, 1, -5)
   scene.add(cube)
 
   // Capsule
@@ -64,15 +67,37 @@ onMounted(() => {
   door.rotation.y = -0.4
   scene.add(door)
 
+  cube.castShadow = true
+  capsule.castShadow = true
+  door.castShadow = true
+
+  const planeGeometry = new THREE.PlaneGeometry(50, 50)
+  const planeMaterial = new THREE.MeshStandardMaterial({ color: 0xdddddd })
+  const plane = new THREE.Mesh(planeGeometry, planeMaterial)
+  plane.rotation.x = -Math.PI / 2
+  plane.position.y = -2
+  plane.receiveShadow = true
+  scene.add(plane)
+
   // Lights
   const ambientLight = new THREE.AmbientLight(0xffffff, 0.3)
   scene.add(ambientLight)
 
   const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2)
-  directionalLight.position.set(5, 10, 7.5)
+  directionalLight.shadow.mapSize.width = 2048
+  directionalLight.shadow.mapSize.height = 2048
+  directionalLight.shadow.camera.left = -20
+  directionalLight.shadow.camera.right = 20
+  directionalLight.shadow.camera.top = 20
+  directionalLight.shadow.camera.bottom = -20
+  directionalLight.shadow.camera.near = 1
+  directionalLight.shadow.camera.far = 50
+  directionalLight.position.set(5, 10, 7)
   directionalLight.castShadow = true
+
   scene.add(directionalLight)
 
+  // controls
   controls = new OrbitControls(camera, renderer.domElement)
   controls.enableDamping = true
   controls.target.set(0, 0, -5)
